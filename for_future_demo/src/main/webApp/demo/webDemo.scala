@@ -1,5 +1,6 @@
 package demo
 import spray.routing.SimpleRoutingApp
+
 /**
  * Created by Wallace on 2015/11/7.
  */
