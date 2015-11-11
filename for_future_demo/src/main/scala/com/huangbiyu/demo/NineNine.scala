@@ -287,12 +287,12 @@ class NineNine {
 
   //  P27
   //  Group the elements of a set into disjoint subsets.
-    def group3[A](ls: List[A]): List[List[A]] =
-      for {
-        a <- combinations(2, ls)
-        noA = ls -- a
-        b <- combinations(3, noA)
-      } yield List(a, b, noA -- b)
+  //    def group3[A](ls: List[A]): List[List[A]] =
+  //      for {
+  //        a <- combinations(2, ls)
+  //        noA = ls -- a
+  //        b <- combinations(3, noA)
+  //      } yield List(a, b, noA -- b)
 }
 
 object NineNine {

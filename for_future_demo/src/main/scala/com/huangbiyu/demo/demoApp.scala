@@ -49,4 +49,5 @@ object demoApp extends App{
   var tempList_1 = S99.combinations(3, ls)
   println(tempList)
   println(tempList_1)
+
 }

@@ -10,4 +10,4 @@ libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.1.0" % "test"
 
 libraryDependencies += "io.spray" % "spray-routing" % "1.2.3"
 
-
+libraryDependencies += "com.typesafe.akka" % "akka-actor_2.10" % "2.3.9"
