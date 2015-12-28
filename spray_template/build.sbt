@@ -1,22 +1,21 @@
-organization  := "com.example"
+organization  := "com.for.future"
 
-version       := "0.1"
+version       := "1.0.0"
 
-scalaVersion  := "2.11.6"
+scalaVersion  := "2.10.4"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+javaOptions ++= Seq("-Xms256M", "-Xmx512M", "-XX:MaxPermSize=512M", "-XX:+CMSClassUnloadingEnabled")
 
-libraryDependencies ++= {
-  val akkaV = "2.3.9"
-  val sprayV = "1.3.3"
-  Seq(
-    "io.spray"            %%  "spray-can"     % sprayV,
-    "io.spray"            %%  "spray-routing" % sprayV,
-    "io.spray"            %%  "spray-testkit" % sprayV  % "test",
-    "com.typesafe.akka"   %%  "akka-actor"    % akkaV,
-    "com.typesafe.akka"   %%  "akka-testkit"  % akkaV   % "test",
-    "org.specs2"          %%  "specs2-core"   % "2.3.11" % "test"
-  )
-}
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.1.0" % "test"
 
-Revolver.settings
+libraryDependencies += "io.spray" % "spray-can_2.10"% "1.3.2"
+
+libraryDependencies += "io.spray" % "spray-servlet_2.10"% "1.3.2"
+
+libraryDependencies += "io.spray" % "spray-routing_2.10"% "1.3.2"
+
+libraryDependencies += "com.typesafe.akka" % "akka-actor_2.10"% "2.3.5"
+
+libraryDependencies += "org.json4s" % "json4s-native_2.10"% "3.2.4"
+
+jetty()
