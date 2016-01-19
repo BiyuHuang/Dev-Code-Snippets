@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 target/
+spark/
 .idea/
 .idea_modules/
 *.xml
