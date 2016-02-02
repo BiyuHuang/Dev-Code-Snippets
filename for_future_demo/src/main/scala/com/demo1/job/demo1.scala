@@ -41,7 +41,7 @@ class Person {
     this.name
   }
 
-  def getInfo = {
+  def getInfo: Unit = {
     println("Person's name is " + s"${this.getName}")
   }
 }

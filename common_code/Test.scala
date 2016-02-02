@@ -8,8 +8,8 @@ object Test {
 
 
 		//读取路径下的文本文件
-		val source =Source.fromFile("G:\\MyCode\\common_code\\test.txt","UTF-8")
-		val contents = source.mkString
-		println(contents)
+		// val source =Source.fromFile("G:\\MyCode\\common_code\\test.txt","UTF-8")
+		// val contents = source.mkString
+		// println(contents) 
 	}
 }
