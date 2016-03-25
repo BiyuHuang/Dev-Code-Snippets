@@ -30,5 +30,3 @@ object Customers extends Table[Customer]("customers") {
     c <- this if c.id is id
   } yield c
 }
-
-=
