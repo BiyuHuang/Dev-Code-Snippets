@@ -17,5 +17,3 @@ libraryDependencies += "io.spray" % "spray-routing_2.10"% "1.3.2"
 libraryDependencies += "com.typesafe.akka" % "akka-actor_2.10"% "2.3.5"
 
 libraryDependencies += "org.json4s" % "json4s-native_2.10"% "3.2.4"
-
-jetty()
