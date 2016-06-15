@@ -12,7 +12,7 @@ libraryDependencies += "io.spray" % "spray-routing" % "1.2.3"
 
 libraryDependencies += "com.typesafe.akka" % "akka-actor_2.10" % "2.3.9"
 
-//libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.7"
+libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.7"
 
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
 
