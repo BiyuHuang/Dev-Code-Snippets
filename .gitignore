@@ -1,6 +1,7 @@
 #################
 ## Eclipse
 #################
+out/artifacts
 target/
 .idea/
 .idea_modules/
