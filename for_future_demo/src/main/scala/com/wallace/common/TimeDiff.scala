@@ -8,9 +8,9 @@ trait TimeDiff {
   /**
     * @param code  Code block/ Methods
     * @param times Execute code times
-    * @return timeDiff  Execute code cost time, unit <ms>
+    * @return res: Execute code cost time, unit <ms>
     **/
-  def timeDiff[T](code: => T, times: Int = 1): Double = {
+  def timeDiff[T <: Any](code: => T, times: Int = 1): Double = {
     val startTime = System.nanoTime() * 0.000001
     for (i <- 1 to times) {
       code

@@ -1,9 +1,6 @@
 package com.wallace.unsafecode.demo2.entity
 
 import java.io.PrintStream
-
-import com.huangbiyu.demo.demo2.common.Logger
-import com.huangbiyu.demo2.common.Logger
 import com.wallace.unsafecode.demo2.common.Logger
 
 /**
