@@ -3,7 +3,8 @@ package com.wallace.unsafecode.demo1.job
 import java.util.Date
 
 import com.wallace.unsafecode.demo1.service.Counter
-import com.wallace.common.{LogSupport, TimePara}
+import com.wallace.common.LogSupport
+import com.wallace.utils.TimePara
 
 /**
  * Created by Wallace on 2016/1/7.

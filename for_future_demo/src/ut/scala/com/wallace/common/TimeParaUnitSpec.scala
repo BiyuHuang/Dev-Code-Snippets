@@ -3,6 +3,7 @@ package com.wallace.common
 import java.util.Date
 
 import com.UnitSpec
+import com.wallace.utils.TimePara
 
 
 /**

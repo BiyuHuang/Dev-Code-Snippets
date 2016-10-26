@@ -1,7 +1,9 @@
-package com.wallace.common
+package com.wallace.utils
 
-import java.text.{DecimalFormat, SimpleDateFormat}
-import java.util.{Locale, Calendar, Date}
+import java.text.SimpleDateFormat
+import java.util.{Calendar, Date}
+
+import com.wallace.common.LogSupport
 
 /**
  * Created by Wallace on 2016/1/7.

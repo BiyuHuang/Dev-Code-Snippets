@@ -1,4 +1,4 @@
-package com.wallace.common
+package com.wallace.utils
 
 /**
   * Created by Wallace on 2016/10/26.

@@ -1,7 +1,5 @@
 package com.wallace.utils
 
-import com.wallace.common.TimeDiff
-
 /**
   * Created by Wallace on 2016/10/27.
   */
