@@ -1,6 +1,6 @@
 package com.huangbiyu.demo
 
-import common.LogSupport
+import com.wallace.common.LogSupport
 import org.scalatest._
 
 /**

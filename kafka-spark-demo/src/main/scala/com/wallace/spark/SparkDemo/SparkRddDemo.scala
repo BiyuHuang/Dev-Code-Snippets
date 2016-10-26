@@ -8,10 +8,8 @@ import org.apache.spark.{SparkConf, SparkContext}
   * Created by Wallace on 2016/4/27.
   */
 object SparkRddDemo extends LogSupport{
-
-
   def main(args: Array[String]) {
-    val conf = new SparkConf().setMaster("local").setAppName("combinByKey")
+    val conf = new SparkConf().setMaster("local[*]").setAppName("combinByKey")
     val sc = new SparkContext(conf)
     val people = List(("male", "Mobin"), ("male", "Kpop"), ("female", "Lucy"), ("male", "Lufei"), ("female", "Amy"))
     val number = List(1,2,3,4,5,6,7,8)

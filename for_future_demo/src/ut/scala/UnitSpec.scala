@@ -1,6 +1,6 @@
 package com
 
-import common.LogSupport
+import com.wallace.common.LogSupport
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 

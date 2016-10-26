@@ -1,12 +1,11 @@
-package com.wallace.spark.common.TimeFormat
+package com.wallace.common
 
-import java.text.SimpleDateFormat
-import java.util.{Calendar, Date}
+import java.text.{DecimalFormat, SimpleDateFormat}
+import java.util.{Locale, Calendar, Date}
 
 /**
-  * Created by Wallace on 2016/5/6.
-  * 时间函数
-  */
+ * Created by Wallace on 2016/1/7.
+ */
 object TimePara {
   def getYear: Int = {
     val now: Date = new Date()
@@ -88,7 +87,7 @@ object TimePara {
     val dateFormat: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
     val cal: Calendar = Calendar.getInstance()
     cal.add(Calendar.DATE, -1)
-    val yesterday = dateFormat.format(cal.getTime)
+    val yesterday = dateFormat.format(cal.getTime())
     yesterday
   }
 
@@ -108,38 +107,38 @@ object TimePara {
     val df: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
     cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY) //这种输出的是上个星期周日的日期，因为老外把周日当成第一天
     cal.add(Calendar.WEEK_OF_YEAR, 1) // 增加一个星期，才是我们中国人的本周日的日期
-    period = df.format(cal.getTime)
+    period = df.format(cal.getTime())
     period
   }
 
   def getFirstDayOfMonth: String = {
     var period: String = ""
-    val cal: Calendar = Calendar.getInstance()
-    val df: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
+    val cal: Calendar = Calendar.getInstance();
+    val df: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     cal.set(Calendar.DATE, 1)
-    period = df.format(cal.getTime) //本月第一天
+    period = df.format(cal.getTime()) //本月第一天
     period
   }
 
   def getEndDayOfMonth: String = {
     var period: String = ""
-    val cal: Calendar = Calendar.getInstance()
-    val df: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
+    val cal: Calendar = Calendar.getInstance();
+    val df: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     cal.set(Calendar.DATE, 1)
     cal.roll(Calendar.DATE, -1)
-    period = df.format(cal.getTime) //本月最后一天
+    period = df.format(cal.getTime()) //本月最后一天
     period
   }
 
   def DateFormat(time: String): String = {
     val sdf: SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
-    val date: String = sdf.format(new Date(time.toLong * 1000l))
+    val date: String = sdf.format(new Date((time.toLong * 1000l)))
     date
   }
 
   def timeFormat(time: String): String = {
     val sdf: SimpleDateFormat = new SimpleDateFormat("HH:mm:ss")
-    val date: String = sdf.format(new Date(time.toLong * 1000l))
+    val date: String = sdf.format(new Date((time.toLong * 1000l)))
     date
   }
 
@@ -148,7 +147,7 @@ object TimePara {
     val df: SimpleDateFormat = new SimpleDateFormat("HH:mm:ss")
     val begin: Date = df.parse(start_time)
     val end: Date = df.parse(end_Time)
-    val between: Double = 1.0 * ((end.getTime - begin.getTime) / 1000) //转化成秒
+    val between: Double = 1.0 * ((end.getTime() - begin.getTime()) / 1000) //转化成秒
     //val hour: Float = between.toFloat / 3600
     //    val decf: DecimalFormat = new DecimalFormat("#.00")
     //    decf.format(between) //格式化
@@ -166,4 +165,20 @@ object TimePara {
     val cost: Double = 1.0 * ((end - begin) / 1000)
     cost.toString + " s"
   }
+}
+
+class Person {
+  def toStr: String = {
+    "Test once!"
+  }
+}
+
+class student extends Person {
+  override def toStr: String = s"${super.toStr} " + s"Test,again"
+}
+object Test extends App with LogSupport{
+  val a = new student
+  val b = new Person
+  log.info(s"Student:${a.toStr}")
+  log.info(s"Person:${b.toStr}")
 }
