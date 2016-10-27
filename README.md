@@ -2,6 +2,6 @@
 
 ## Introduction
 
-      All of the repo are Personcal Dev Code.   
+      All of the repo are Personal Dev Code.   
       May you have a nice day.
 
