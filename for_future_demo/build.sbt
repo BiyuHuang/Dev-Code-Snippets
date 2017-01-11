@@ -21,7 +21,9 @@ libraryDependencies += "com.typesafe.akka" % "akka-actor_2.10" % "2.3.9"
 
 libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.7"
 
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
+libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.16"
+
+//libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.1.2"
 
 // libraryDependencies += "ch.qos.logback" % "logback-core" % "1.1.2"
 
