@@ -52,29 +52,65 @@
 
 ### 1.1.3 Tcp/IP协议(协议族)
 
-* TCP - 传输控制协议: 从应用程序到网络的数据传输控制
-* IP - 网际协议(Internet Protocol)
-* HTTP - 超文本传输协议(Hyper Text Transfer Protocol): 负责web服务器与web浏览器之间的通信
-* HTTPS - 安全的HTTP(Secure HTTP)：负现web服务器与web浏览器之间的安全通信
-* SSL - 安全套接字层(Secure Sockets Layer): 为安全数据传输加密数据
-* SMTP - 简易邮件传输协议(Simple Mail Transfer Protocol): 电子邮件的传输
-* MIME - 多用途因特网邮件扩展(Multi-purpose Internet Mail Extensions): 使SMTP有能力通TCP/IP网络传输多媒体文本，包括声音、视频和二进制数据
-* IMAP - 因特网消息访问协议(Internet Message Access Protocol): 存储和取回电子邮件
-* POP - 邮局协议(Post Office Protocol): 用于从电子邮件服务器向个人电脑下载电子邮件
-* FTP - 文件传输协议(File Transfer Protocol): 计算机之间的文件传输
-* NTP - 网络时间协议(Network Time Protocol): 计算机之间同步时间
-* DHCP - 动态主机配置协议(Dynamic Host Configuration Protocol): 向网络中的计算机分配动态IP地址
-* SNMP - 简单网络管理协议(Simple Network Management Protocol): 计算机网络的管理
-* LDAP - 轻量级的目录访问协议(Lightweight Directory Access Protocol):用于从因特网搜集关于用户和电子邮件地址的信息
-* ICMP - 因特网消息控制协议(Internet Control Message Protocol): 负责网络中的错误处理
-* ARP - 地址解析协议(Address Resolution Protocol): 用于通过 IP 来查找基于 IP 地址的计算机网卡的硬件地址
-* RARP - 反向地址转换协议(Reverse Address Resolution Protocol): 用于通过 IP 查找基于硬件地址的计算机网卡的 IP 地址
-* BOOTP - 自举协议(Boot Protocol): 用于从网络启动计算机
-* PPTP - 点对点隧道协议(Point to Point Tunneling Protocol): 用于私人网络之间的连接(隧道)
+    * TCP - 传输控制协议: 从应用程序到网络的数据传输控制
+    * IP - 网际协议(Internet Protocol)
+    * HTTP - 超文本传输协议(Hyper Text Transfer Protocol): 负责web服务器与web浏览器之间的通信
+    * HTTPS - 安全的HTTP(Secure HTTP)：负现web服务器与web浏览器之间的安全通信
+    * SSL - 安全套接字层(Secure Sockets Layer): 为安全数据传输加密数据
+    * SMTP - 简易邮件传输协议(Simple Mail Transfer Protocol): 电子邮件的传输
+    * MIME - 多用途因特网邮件扩展(Multi-purpose Internet Mail Extensions): 使SMTP有能力通TCP/IP网络传输多媒体文本，包括声音、视频和二进制数据
+    * IMAP - 因特网消息访问协议(Internet Message Access Protocol): 存储和取回电子邮件
+    * POP - 邮局协议(Post Office Protocol): 用于从电子邮件服务器向个人电脑下载电子邮件
+    * FTP - 文件传输协议(File Transfer Protocol): 计算机之间的文件传输
+    * NTP - 网络时间协议(Network Time Protocol): 计算机之间同步时间
+    * DHCP - 动态主机配置协议(Dynamic Host Configuration Protocol): 向网络中的计算机分配动态IP地址
+    * SNMP - 简单网络管理协议(Simple Network Management Protocol): 计算机网络的管理
+    * LDAP - 轻量级的目录访问协议(Lightweight Directory Access Protocol):用于从因特网搜集关于用户和电子邮件地址的信息
+    * ICMP - 因特网消息控制协议(Internet Control Message Protocol): 负责网络中的错误处理
+    * ARP - 地址解析协议(Address Resolution Protocol): 用于通过 IP 来查找基于 IP 地址的计算机网卡的硬件地址
+    * RARP - 反向地址转换协议(Reverse Address Resolution Protocol): 用于通过 IP 查找基于硬件地址的计算机网卡的 IP 地址
+    * BOOTP - 自举协议(Boot Protocol): 用于从网络启动计算机
+    * PPTP - 点对点隧道协议(Point to Point Tunneling Protocol): 用于私人网络之间的连接(隧道)
 
 ### 1.1.4 Tcp/IP邮件
 
       邮件收发使用不同的TCP/IP协议: SMTP发送邮件,IMAP连接邮件服务器,POP从邮件服务器下载邮件
+
+### 1.1.5 SNMP协议详解
+    1. SNMP协议(简单网络管理协议),是TCP/IP协议簇的一个应用层协议.
+
+    2. SNMP系统主要包括管理信息库(MIB)、管理信息结构(SMI)及SNMP报文协议.
+
+    3. MIB: 定义被管理对象的一系列属性(对象的名称、对象的访问权限和对象的数据类型等)
+    每个SNMP设备(Agent)都有自已的MIB. MIB是NMS(网管系统)和Agent之间的沟通桥梁.
+![NMS Agent和MIB的关系][1]
+[1]:resources\SNMP_MIB.jpg "NMS Agent和MIB的关系"
+
+     MIB文件中的变量使用的名字取自ISO和ITU管理的对象标识符（object identifier）名字空间。它是一种分级树的结构
+![MIB树结构][2]
+[2]:resources\MIB_TREE.png "MIB树结构"
+
+    4. SMI: 定义了SNMP框架所用信息的组织、组成和标识
+
+    5. SNMP报文(5种报文)
+       报文结构： 版本号
+                 团体号
+                 协议数据单元PDU(0: get-request; 1: get-next-request; 2: get-response; 3: set-request; 4: trap.)
+
+       get-request操作：从代理进程处提取一个或多个参数值;
+       get-next-request操作：从代理进程处提取紧跟当前参数值的下一个参数值;
+       set-request操作：设置代理进程的一个或多个参数值;
+       get-response操作：返回的一个或多个参数值。这个操作是由代理进程发出的，它是前面三种操作的响应操作;
+       trap操作：代理进程主动发出的报文，通知管理进程有某些事情发生.
+![SNMP的5种报文操作][3]
+[3]:resources\pdu.png "SNMP的5种报文操作"
+
+![报文的组成][4]
+[4]:resources\pdu_detail.png "报文的组成"
+
+    6. SNMP协议 PDU报文格式分析（BER编码）
+
+
 
 ## 1.2 __XML模块__
 
@@ -414,10 +450,14 @@
 
 ### 1.5.3 HTML统一资源定位器(URL)
 ---
+
 # ___开发语言专题___
 >     scala  SQL  Python  java  shell
 
 ## 2.1 scala模块
+### 2.1.1 scala 与 java  
+          import scala.collection.JavaConversions._
+
 
 ### 2.1.1 zip操作
 
@@ -445,7 +485,75 @@
 
 * Package
 
+### 2.1.3  函数
+
+*             def createCommand(srcPath:String) {
+                (0 to 23).foreach { x =>
+                  val t = x match {
+                    case v if v < 10 => s"0$x"
+                    case _ => x
+                  }
+                  val mkDirCommand = s"""hadoop fs -mkdir -p $srcPath/p_provincecode=440000/p_date=2016-11-09/p_hour=$x/\n"""
+
+                  val putCommand = s"""hadoop fs -put ./2016-11-09_$t-*/*.csv  $srcPath/p_provincecode=440000/p_date=2016-11-09/p_hour=$x/\n"""
+                  println(mkDirCommand + "\n" +str)
+                }
+              }
+
 ## 2.2 SQL模块
+### 2.2.1 SparkSQL字符串处理
+*         regexp_replace(src_str, pattern, replace_str) 正则匹配,替换相关内容
+
+          0: jdbc:hive2://SPARK2:18000/> select regexp_replace('2015/6/3 11:59','/','-');                    
+          +-----------------+
+          |       _c0       |
+          +-----------------+
+          | 2015-6-3 11:59  |
+          +-----------------+
+
+*         concat_ws(separator,str1,str2,...)  字符串拼接         
+
+          0: jdbc:hive2://SPARK2:18000/> select concat_ws(':',regexp_replace('2015/6/3 11:59','/','-'),'00');        
+          +--------------------+
+          |        _c0         |
+          +--------------------+
+          | 2015-6-3 11:59:00  |
+          +--------------------+
+
+*         trim(str) 去除无效空格
+          0: jdbc:hive2://SPARK2:18000/> select length(trim('  wallace   '));
+          +------+
+          | _c0  |
+          +------+
+          | 7    |
+          +------+
+          1 row selected (0.045 seconds)
+          0: jdbc:hive2://SPARK2:18000/> select length('  wallace   ');      
+          +------+
+          | _c0  |
+          +------+
+          | 12   |
+          +------+
+
+*         regexp_extract 字符串正则表达式解析函数
+
+          0: jdbc:hive2://localhost:18000/> select regexp_extract('ip1234567890@itv','[0-9]+',0);
+
+          +-------------+
+          |     _c0     |
+          +-------------+
+          | 1234567890  |
+          +-------------+
+
+*         复制表 CREATE TABLE XXXX AS SELECT
+          CREATE TABLE XXXX_temp AS SELECT * FROM XXXX;
+
+          Tips: 1. 相同名称，相同数据类型定义
+                2. 选择特定的列，select子句需要列出列
+
+*         内存表 CACHE TABLE
+          cache table xxxx_cache as select * from table_a;
+          uncache table xxxx_cache;(该操作仅仅将内存释放，并没有将cache操作的转换过程删除掉，因而uncache之后可以再次查询到结果;可以使用drop table xxxx_cache操作替代。参考RDD的 transform 与 action 的工作原理.)
 
 ## 2.3 Python模块
 
@@ -457,6 +565,27 @@
         echo "PID OF THIS SCRIPT: $$"
         echo "PPID OF THIS SCRIPT: $PPID"
         echo "UID OF THIS SCRIPT: $UID"
+
+### 2.5.2 通配符
+
+        * 	 匹配0或多个字符 	 a*b  a与b之间可以有任意长度的任意字符, 也可以一个也没有, 如aabcb, a01b, ab等
+        ? 	 匹配任意一个字符 	 a?b  a与b之间有且只有一个字符, 可以是任意字符, 如aab, adb, a0b等
+        [list] 	 匹配list中的任意单一字符 	 a[xyz]b  a与b之间有且只有一个字符, 且只能是x或y或z, 如: axb, ayb, azb。
+        [!list] 	 匹配除list中的任意单一字符 	 a[!0-9]b  a与b之间有且只有一个字符, 但不能是数字, 如axb, aab, a-b等
+        [c1-c2] 	 匹配c1-c2中的任意单一字符 	 a[0-9]b  a与b之间有且只有一个字符，该字符是0-9之间的数字，如a0b, a1b，... ，a9b。
+        {string1,string2,...} 	 匹配 sring1 或 string2 (或更多)其一字符串 	 a{abc,xyz,123}b    a与b之间只能是abc或xyz或123这三个字符串之一。
+
+### 2.5.1 文件操作
+
+          1. :> test.txt (清空文件内容)
+          2. 文件合并操作
+              for i in *.csv ; do cat "$i" >> res.csv  ;done (合并所有csv文件 到 res.csv)
+              cat test1.csv test2.csv > test.csv (合并test1.csv 与 test2.csv)
+              find . -name "*.csv" -type f -exec cat {} + > result
+          3. 替换文件中的字符 *
+              ll ./*/*.zip |awk '{print $10}' >> FileList.csv |sed -i 's/*//g' FileList.csv
+          4. 解压ZIP文件到相同目录
+              ls -d ./* | xargs -I {} unzip -P SOPinU {}/*.zip -d {}/
 
 ## 2.6 C/C++语言
 ### 2.6.1 移位操作
@@ -486,6 +615,69 @@
     从编程角度来看，RDD可以简单看成一个数组；
     与普通数组的区别是，RDD中的数据是分区存储的，能够并行处理RDD.
     RDD计算操作算子：Transformation(变换) 与 Action(行动)
+
+>     RDD对象实质上是一个元数据结构，存储着Block、Node等的映射关系，以及其他的元数据信息。
+      一个RDD就是一组分区，在物理数据存储上，RDD的每个分区对应的就是一个Block，Block可以存储在内存，当内存不够时可以存储到磁盘上
+![算子与数据空间][5] ![RDD数据管理模型][6]
+[5]:resources\rdd.png "算子与数据空间"
+[6]:resources\rdd_data_manage_model.png "RDD数据管理模型"
+
+>     每一个运行在cluster上的spark应用程序，是由一个运行main函数的driver program和运行多种并行操作的executes组成
+
+    其中spark的核心是弹性分布式数据集（Resilient Distributed Dataset—RDD）
+
+        Resilient（弹性）：易变化、易计算
+
+        Distributed（分布式）：可横跨多台机器，集群分布
+
+        Dataset（数据集）：大批量数据的集合
+
+    RDD基本概念
+
+    RDD是逻辑集中的实体，代表一个分区的只读数据集，不可发生改变
+
+    【RDD的重要内部属性】
+
+        分区列表(partitions)
+        对于一个RDD而言，分区的多少涉及对这个RDD并行计算的粒度，每一个RDD分区的计算都会在一个单独的任务中执行，每一个分区对应一个Task，分区后的数据存放在内存当中
+
+        计算每个分区的函数(compute)
+        对于Spark中每个RDD都是以分区进行计算的，并且每个分区的compute函数是在对迭代器进行复合操作，不需要每次计算，直到提交动作触发才会将之前所有的迭代操作进行计算，lineage在容错中有重要作用
+
+        对父级RDD的依赖(dependencies)
+        由于RDD存在转换关系，所以新生成的RDD对上一个RDD有依赖关系，RDD之间通过lineage产生依赖关系
+
+        【窄依赖】
+        每一个父RDD的分区最多只被子RDD的一个分区所使用，可以类似于流水线一样，计算所有父RDD的分区；在节点计算失败的恢复上也更有效，可以直接计算其父RDD的分区，还可以进行并行计算
+
+        子RDD的每个分区依赖于常数个父分区（即与数据规模无关）
+        输入输出一对一的算子，且结果RDD的分区结构不变，主要是map、flatmap
+        输入输出一对一，但结果RDD的分区结构发生了变化，如union、coalesce
+        从输入中选择部分元素的算子，如filter、distinct、subtract、sample
+
+        【宽依赖】
+        多个子RDD的分区会依赖于同一个父RDD的分区，需要取得其父RDD的所有分区数据进行计算，而一个节点的计算失败，将会导致其父RDD上多个分区重新计算
+
+        子RDD的每个分区依赖于所有父RDD分区
+        对单个RDD基于key进行重组和reduce，如groupByKey、reduceByKey
+        对两个RDD基于key进行jion和重组，如jion
+
+        对key-value数据类型RDD的分区器，控制分区策略和分区数(partitioner)
+        partitioner就是RDD的分区函数，即HashPartitioner（哈希分区）和RangePartitioner（区域分区），分区函数决定了每个RDD的分区策略和分区数，并且这个函数只在(k-v)类型的RDD中存在，在非(k-v)结构的RDD中是None
+
+        每个数据分区的地址列表(preferredLocations)
+        与Spark中的调度相关，返回的是此RDD的每个partition所出储存的位置，按照“移动数据不如移动计算”的理念，在spark进行任务调度的时候，尽可能将任务分配到数据块所存储的位置
+
+        控制操作（control operation）
+        spark中对RDD的持久化操作是很重要的，可以将RDD存放在不同的存储介质中，方便后续的操作可以重复使用。
+
+      主要有cache、persist、checkpoint，checkpoint接口是将RDD持久化到HDFS中，与persist的区别是checkpoint会切断此RDD之前的依赖关系，而persist会保留依赖关系。checkpoint的两大作用：一是spark程序长期驻留，过长的依赖会占用很多的系统资源，定期checkpoint可以有效的节省资源；二是维护过长的依赖关系可能会出现问题，一旦spark程序运行失败，RDD的容错成本会很高
+
+>     算子分类
+      大致可以分为三大类算子。
+      1）Value数据类型的Transformation算子，这种变换并不触发提交作业，针对处理的数据项是Value型的数据。
+      2）Key-Value数据类型的Transfromation算子，这种变换并不触发提交作业，针对处理的数据项是Key-Value型的数据对。
+      3）Action算子，这类算子会触发SparkContext提交Job作业。
 
 *  map
 
@@ -849,6 +1041,28 @@
 
         hadoop fs -getmerge /chuanqi_tmp/Legend/test/* /home/mr/chuanqi/Legend.txt  //从HDFS上下载文件到本地路径/home/mr/chuanqi
 
+
+        def extractFieldNameFrom(hc: HiveContext, tableName: String, log:Logger): List[String] = {
+            val sqlText = s"desc $tableName"
+            val fieldNames: Try[List[String]] = Try {
+              val fieldInfo = hc.sql(sqlText).collect.filter(x => {
+                val fieldNameRow = x.mkString
+                fieldNameRow.endsWith("null") && !fieldNameRow.startsWith("p_")
+              }
+              )
+              fieldInfo.map(x => x(0).toString).toList
+            }
+
+            fieldNames match {
+              case Success(result) =>
+                result
+              case Failure(e) =>
+                log.info(s"Extract field name from table $tableName throw exception: " + e.getMessage)
+                List()
+            }
+          }
+
+
 ### 3.1.2 Spark组件
 
 #### 3.1.2.1 Spark Streaming  + Kafka
@@ -856,25 +1070,25 @@
 >集群资源信息: CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181
 
         1. 创建Topic
-        ./kafka-topics.sh --create --topic broker1_rep1_parti20 --zookeeper CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --replication-factor 1 --partitions 20
+        /home/mr/kafka/bin/kafka-topics.sh --create --topic broker1_rep1_parti20 --zookeeper CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --replication-factor 1 --partitions 20
 
         2. 列出所有Topic
-        ./kafka-topics.sh --list --zookeeper  CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181
+        /home/mr/kafka/bin/kafka-topics.sh --list --zookeeper  CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181
 
         3. 查看Topic详情
-        ./kafka-topics.sh --describe --zookeeper CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
+        /home/mr/kafka/bin/kafka-topics.sh --describe --zookeeper CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
 
         4. kafka生产命令行
-        ./kafka-console-producer.sh --broker-list CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
+        /home/mr/kafka/bin/kafka-console-producer.sh --broker-list CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
 
         6. kafka消费命令行
-        ./kafka-console-consumer.sh --zookeeper  CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
+        /home/mr/kafka/bin/kafka-console-consumer.sh --zookeeper  CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
 
         7. kafka删除Topic
-        ./kafka-topics.sh --delete --zookeeper CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
+        /home/mr/kafka/bin/kafka-topics.sh --delete --zookeeper CUNDAP:2181,CUNSPARK:2181,CUNHADOOP:2181 --topic broker1_rep1_parti20
 
         8. 启动kafka服务
-        ./kafka-server-start.sh config/server.properties
+        /home/mr/kafka/bin/kafka-server-start.sh config/server.properties
 
 #### 3.1.2.2 Spark Steaming 窗口操作
 
@@ -935,6 +1149,71 @@
       <td>Save this DStream's contents as a Hadoop file. The file name at each batch interval is generated based on prefix and suffix: "prefix-TIME_IN_MS[.suffix]".</td>
   </tr>
 </table>
+
+### 3.1.3 Spark性能调优
+#### 3.1.3.1 Spark参数配置
+
+          keyParameters = [
+              //"spark.serializer,org.apache.spark.serializer.KryoSerializer",
+              "spark.executor.cores,12",
+              "spark.kryoserializer.buffer,512",
+              "spark.driver.extraJavaOptions,-Xss32m",
+              "spark.driver.maxResultSize,3g",
+              "spark.eventLog.enabled,false",
+              "spark.shuffle.consolidateFiles,true",
+              "spark.rdd.compress,true",
+              "spark.io.compression.codec,lzf",
+              "spark.ui.port,0",
+              "spark.cores.max,36",
+              "spark.executor.memory,12g",
+              "spark.sql.shuffle.partitions,24",
+              "spark.locality.wait,100",
+              "spark.default.parallelism,90",
+          //    "spark.streaming.receiver.maxRate,6000",
+              "spark.streaming.kafka.maxRatePerPartition,3000",
+              "spark.shuffle.spill,false"
+            ]
+
+          spark.num.executors
+          参数说明：该参数用于设置Spark作业总共要用多少个Executor进程来执行。Driver在向YARN集群管理器申请资源时，YARN集群管理器会尽可能按照你的设置来在集群的各个工作节点上，启动相应数量的Executor进程。这个参数非常之重要，如果不设置的话，默认只会给你启动少量的Executor进程，此时你的Spark作业的运行速度是非常慢的
+
+          spark.executor.cores
+          参数说明：该参数用于设置每个Executor进程的CPUcore数量。这个参数决定了每个Executor进程并行执行task线程的能力。因为每个CPUcore同一时间只能执行一个task线程，因此每个Executor进程的CPUcore数量越多，越能够快速地执行完分配给自己的所有task线程
+          spark.cores.max(36) = spark.executor.cores(12) * spark.num.executors(自动默认分配 3)
+
+          spark.driver.maxResultSize
+          参数说明：该参数用于设置Driver进程的内存。参数调优建议：Driver的内存通常来说不设置，或者设置1G左右应该就够了。唯一需要注意的一点是，如果需要使用collect算子将RDD的数据全部拉取到Driver上进行处理，那么必须确保Driver的内存足够大，否则会出现OOM内存溢出的问题。
+          eg:九江定位和道路修正读入大量参数，尝试增大driver 内存
+
+          spark.default.parallelism
+          参数说明：该参数用于设置每个stage的默认task数量。这个参数极为重要，如果不设置可能会直接影响你的Spark作业性能。
+          Spark作业的默认task数量为500~1000个较为合适。很多同学常犯的一个错误就是不去设置这个参数，那么此时就会导致Spark自己根据底层HDFS的block数量来设置task的数量，默认是一个HDFS block对应一个task。
+
+          spark.streaming.concurrentJobs
+          参数说明：jobExecutor 的线程池大小，是由 spark.streaming.concurrentJobs 参数来控制的，当没有显式设置时，其取值为 1
+
+#### 3.1.3.2 GC调优
+          1. GC算法原理
+             传统JVM内存管理中，将HEAP空间分为Young/Old两个分区,Young分区所括一个Eden和两个Survivor分区，如图所示;
+             新产生的对象首先会被存在Eden分区,而每次minor GC发生，JVM一方面将Eden分区内存活的对象拷贝到一个空的Survivor分区，另一方面将另一个正在被使用的Survivor分区中的存活对象也拷贝到空的Survivor分区内;
+             在此过程中，JVM始终保持一个Survivor分区处于全空的状态。一个对象在两个Survivor之间的拷贝到一定次数后，如果还是存活的，就将其拷入Old分区。当Old分区没有足够空间时，GC会停下所有程序线程，进行Full GC，即对Old区中的对象进行整理。
+             这个所有线程都暂停的阶段被称为Stop-The-World(STW)，也是大多数GC算法中对性能影响最大的部分。
+![分年代的Heap结构][7]
+[7]:resources\heap_struct.jpg "分年代的Heap结构"
+
+### 3.1.4 Spark工作机制
+#### 3.1.4.1 Spark 执行机制
+
+         1. TaskSetManager 的有效 Locality Levels: PROCESS_LOCAL、NODE_LOCAL、NO_PREF、RACK_LOCAL、ANY.
+            这几个值代表 task 的计算节点和 task 的输入数据的节点位置关系:
+              PROCESS_LOCAL: 数据在同一个 JVM 中，即同一个 executor 上。这是最佳数据 locality。
+              NODE_LOCAL: 数据在同一个节点上。比如数据在同一个节点的另一个 executor上；或在 HDFS 上，恰好有 block 在同一个节点上。速度比 PROCESS_LOCAL 稍慢，因为数据需要在不同进程之间传递
+              NO_PREF: 数据从哪里访问都一样快，不需要位置优先
+              RACK_LOCAL: 数据在同一机架的不同节点上。需要通过网络传输数据，比 NODE_LOCAL 慢
+              ANY: 数据在非同一机架的网络上，速度最慢
+
+
+
 ## 3.2 Sybase模块
 
 ## 3.3 GBase模块
@@ -956,13 +1235,18 @@
 >     Linux
 
 ## 5.1 Linux系统模块
-###    5.1.1 查看进程
+### 5.1.1 查看进程
+
           ps -ef| grep xxx
           ps -a
           ps -e
-###    5.1.2 新建文件
+
+### 5.1.2 新建文件
+
           touch 文件名
-####    5.1.3 HADOOP常用命令
+
+#### 5.1.3 HADOOP常用命令
+
 *      5.1.3.1 列出目录及文件信息
               Hadoop fs –ls /home/......
 *      5.1.3.2 删除某目录下的文件
@@ -985,7 +1269,7 @@
 *      5.1.3.9 HDFS源目录下载文件到本地
               hadoop fs -get sourcePath targetPath
 
-###    5.1.4 磁盘挂载
+### 5.1.4 磁盘挂载
 *         a.查看磁盘挂载信息
 
             df -h   
@@ -1004,13 +1288,21 @@
 
             mount /dev/sdb /mnt
 
-###    5.1.5 查看占用磁盘空间
+
+### 5.1.5 查看占用磁盘空间
           du -s
           du -sh
           du -h
-###    5.1.6 检查必要的服务，如系统定时任务管理
+          du --max-depth=1 -h  <--max-depth=N	显示目录总计(--all 一起使用计算文件)当N 为指定数值时计算深度为N；--max-depth=0 等于--summarize>
+
+### 5.1.6 检查必要的服务，如系统定时任务管理
+
           crontab -l
-###    5.1.7 主机之间的文件传输
+          crontab -e 编辑系统定时任务
+
+
+### 5.1.7 主机之间的文件传输
+
           scp -r sourcePath hostname:/targetPath
 <table class="table table-bordered table-condensed">
  <tr>
@@ -1033,10 +1325,11 @@
 
          cp -u sourcePath targetPath #只复制更新的文件
 
-###    5.1.8 kill全部检索出来的所有进程
+### 5.1.8 kill全部检索出来的所有进程
+
           ps -ef | grep "nslookup" | awk '{print $2}' | xargs -t -i kill -9 {}
 
-###    5.1.9 常见解压命令
+### 5.1.9 常见解压命令
 
 <table class="table table-bordered table-condensed">
   <tr>
@@ -1059,28 +1352,84 @@
     <td>.Z 格式</td>
     <td>zcat  xx.Z  |  tar -xf</td>
   </tr>
+  <tr>
+    <td>7z 格式</td>
+    <td> 7za x temp.7z -r -o./</td>
+  </tr>
 </table>
 
-###    5.1.10 显示网络状态
+
+<table class="table table-bordered table-condensed">
+  <tr>
+    <td>格式</td>
+    <td>压缩命令</td>
+  </tr>
+  <tr>
+    <td>.zip 格式</td>
+    <td>zip -r xx.zip targetPath/*<br/>zip -qj test.zip targetPath/* (-j参数: 不处理压缩文件中原有的目录路径)</td>
+  </tr>
+  <tr>
+    <td>.gz格式</td>
+    <td>gzip files</td>
+  </tr>
+</table>
+
+
+### 5.1.10 显示网络状态
 *         a.查看某端口号的状态：netstat -tulnp |grep 端口号
 *         b.根据端口列进程：netstat  -ntlp  |  grep 端口号
 *         c.跟踪指定进程的PID：gdb -p pid
 
-###    5.1.11 添加用户、组
-*          a.添加新用户
+### 5.1.11 用户/用户组 相关操作
+*          a.添加新用户 / 删除用户
 
-             useradd hadoop -m -d /home/hadoop
-             passwd hadoop  (设置密码)
-*          b.添加组
+             useradd hadoop -m -d /home/hadoop;
+             passwd hadoop  (设置密码);
 
-###    5.1.12 显示历史输入记录
+             useradd -d /home/test test //增加用户test，并制定test用户的主目录为/home/test;
+             passwd test //为test设置密码;
+
+             userdel test //永久删除用户
+
+*          b.添加组 / 删除组
+
+             groupadd test //新建test工作组;
+             useradd -g test phpq //新建phpq用户并增加到test工作组;
+             usermod -G groupname username //给已有的用户增加工作组;
+             gpasswd -d A GROUP //从GROUP组中删除用户A
+
+             groupdel GROUP //永久删除GROUP组
+             usermod –G GROUP GROUP //强制删除该用户的主目录和主目录下的所有文件和子目录
+
+*          c.更改用户相应的权限设置：
+
+             usermod -s /sbin/nologin test //限定用户test不能telnet，只能ftp;
+             usermod -s /sbin/bash test //用户test恢复正常;
+             usermod -d /test test //更改用户test的主目录为/test;
+             usermod -s /usr/bin/passwd test //用户telnet后将直接进入改密界面;
+             限制用户只能访问/home/test，不能访问其他路径{
+               修改/etc/vsftpd/vsftpd.conf如下：
+               chroot_list_enable=YES //限制访问自身目录
+               # (default follows)
+               chroot_list_file=/etc/vsftpd/vsftpd.chroot_list
+               编辑 vsftpd.chroot_list文件，将受限制的用户添加进去，每个用户名一行
+               改完配置文件，不要忘记重启vsFTPd服务器
+               /etc/init.d/vsftpd restart
+             };
+
+*          d.显示用户信息
+
+              id user
+              cat /etc/passwd
+
+### 5.1.12 显示历史输入记录
 
            history
            history -c
 
-###    5.1.13 统计文件的个数、行数、字数、字节数等信息
+### 5.1.13 统计文件的个数、行数、字数、字节数等信息
 
-1.          wc(Word Count)命令
+*          1.wc(Word Count)命令
 
             命令参数：
 
@@ -1098,7 +1447,7 @@
 
             –version 显示版本信息.
 
-2.          ls 命令
+*          2.ls 命令
 
             只显示文件夹 ls -l | grep ^d
 
@@ -1112,12 +1461,12 @@
 
             统计/home/han目录(包含子目录)下的所有js文件则: ls -lR /home/han|grep js|wc -l 或 ls -l "/home/han"|grep "js"|wc -l   
 
-###     5.1.14 修改文件名
+### 5.1.14 修改文件名
 
             修改后缀名
             rename .txt .csv *
 
-###     5.1.15 配置IP地址
+### 5.1.15 配置IP地址
 
             修改网卡配置文件ifcfg-eth0
             vim /etc/sysconfig/network-scripts/ifcfg-eth0
@@ -1137,7 +1486,7 @@
             ping网关
             pint外网
 
-###     5.1.16 磁盘挂载
+### 5.1.16 磁盘挂载
 
             fdisk -l  //先查询未挂载的硬盘名如：sdb1 等  
             mkfs.ext3 /dev/xvdb   开始格式化  
@@ -1151,14 +1500,17 @@
             卸载挂载点：  
             umount /home/ftp2  
 
-###     5.1.17 系统监控
+### 5.1.17 系统监控
 
            vmstat -S M
            top #查看cpu利用率
            iostat -c -t 5
            iostat -x 1 10
+           dstat
 
-###     5.1.18 IO实时监控
+
+
+### 5.1.18 IO实时监控
 
            iostat -d -k 2 #参数 -d 表示，显示设备（磁盘）使用状态；-k某些使用           block为单位的列强制使用Kilobytes为单位；2表示，数据显示每隔2秒刷新一次;
            iostat -x 2 #每隔2秒刷新一下磁盘使用状态
@@ -1166,14 +1518,268 @@
            iostat -d -m 2     #查看TPS和吞吐量信息(磁盘读写速度单位为MB)
            iostat -d -x -k 1 10 #查看设备使用率（%util）、响应时间（await） iostat -c 1 10 #查看cpu状态
 
-###     5.1.19 sz / rz 上传下载文件命令(SecureCRT)
-            下载文件：sz finename1 filename2
-            上传文件：rz
+           dd生成指定大小的文件
+           dd if=/home/10192057/temp_data/emsSimulator.zip of=/home/10192057/temp_data/temp.zip bs=1M count=1024 //测试磁盘读写速度
+           dd if=/dev/zero of=/home/10192057/temp_data/temp_data bs=1M count=1024
 
-###     5.1.20 date命令使用
+### 5.1.19 sz / rz 上传下载文件命令(SecureCRT)
+           下载文件：sz finename1 filename2
+           上传文件：rz
 
-            $ date +%F' '%T
-            2016-07-05 09:59:32
+### 5.1.20 date命令使用
+
+           $ date +%F' '%T
+           2016-07-05 09:59:32
+
+### 5.1.21 查看系统信息
+
+           1. cat /etc/fstab
+           2. df -T -h |  df  -T
+           3. parted   ，然后执行p（即print）
+           4. cat /proc/cpuinfo (打印CPU信息)
+              cat /proc/cpuinfo |grep "cores"|uniq (查看CPU是几核)
+              cat /proc/cpuinfo |grep "processor"|wc -l (查看逻辑CPU的个数)
+              cat /proc/cpuinfo |grep "physical id"|sort |uniq|wc -l  (查看物理CPU的个数)
+              lscpu (列出CPU信息)
+
+
+### 5.1.22 文件格式转换
+           iconv -f GBK -t UTF-8 test.txt -o test.txt
+           iconv -f UTF-8 -t GBK test.txt -o test.txt
+
+           Input/Output format specification:
+            -f, --from-code=NAME       encoding of original text
+            -t, --to-code=NAME         encoding for output
+
+           Information:
+            -l, --list                 list all known coded character sets
+
+           Output control:
+            -c                         omit invalid characters from output
+            -o, --output=FILE          output file
+            -s, --silent               suppress warnings
+                --verbose              print progress information
+
+
+### 5.1.23 NBTSTAT命令详解
+
+            显示协议统计和当前使用 NBI 的 TCP/IP 连接
+            (在 TCP/IP 上的 NetBIOS)。
+
+            NBTSTAT [ [-a RemoteName] [-A IP address] [-c] [-n]
+            [-r] [-R] [-RR] [-s] [-S] [interval] ]
+
+            -a   (适配器状态)    列出指定名称的远程机器的名称表
+            -A   (适配器状态)    列出指定 IP 地址的远程机器的名称表。
+            -c   (缓存)          列出远程[计算机]名称及其 IP 地址的 NBT 缓存
+            -n   (名称)          列出本地 NetBIOS 名称。
+            -r   (已解析)        列出通过广播和经由 WINS 解析的名称
+            -R   (重新加载)      清除和重新加载远程缓存名称表
+            -S   (会话)          列出具有目标 IP 地址的会话表
+            -s   (会话)          列出将目标 IP 地址转换成计算机 NETBIOS 名称的会话表。
+            -RR  (释放刷新)      将名称释放包发送到 WINS，然后启动刷新
+
+            RemoteName   远程主机计算机名。
+            IP address   用点分隔的十进制表示的 IP 地址。
+            interval     重新显示选定的统计、每次显示之间暂停的间隔秒数。
+                 按 Ctrl+C 停止重新显示统计。
+
+### 5.1.24 netstat命令详解
+
+            netstat –s本选项能够按照各个协议分别显示其统计数据。如果我们的应用程序（如Web浏览器）运行速度比较慢，或者不能显示Web页之类的数据，那么我们就可以 用本选项来查看一下所显示的信息。我们需要仔细查看统计数据的各行，找到出错的关键字，进而确定问题所在。
+
+          　　netstat –e本选项用于显示关于以太网的统计数据。它列出的项目包括传送的数据报的总字节数、错误数、删除数、数据报的数量和广播的数量。这些统计数据既有发送的数据报数量，也有接收的数据报数量。这个选项可以用来统计一些基本的网络流量）。
+
+          　　netstat –r本选项可以显示关于路由表的信息，类似于后面所讲使用route print命令时看到的 信息。除了显示有效路由外，还显示当前有效的连接。
+
+          　　netstat –a本选项显示一个所有的有效连接信息列表，包括已建立的连接（ESTABLISHED），也包括监听连接请求（LISTENING）的那些连接。
+
+          　　netstat –n显示所有已建立的有效连接。
+
+### 5.1.25 Linux系统下强制踢掉登录用户
+
+          1. 强制踢人命令格式：pkill -kill -t tty
+          2. 踢掉用终端登陆的用户
+           ps -ef |grep pts/0
+           kill -9 pid
+
+### 5.1.26 Shell浮点数比较大小
+
+            value1=10.85
+            value2=9.5
+            if [ $(echo "$value1 < $value2"|bc) -eq 1 ];then
+               res="较大的值为：$value2"
+            else
+               res="较大的值为：$value1"
+            fi
+
+### 5.1.27 Sed 命令详解
+
+            sed命令行格式为：
+            sed [-nefri] ‘command’ 输入文本
+
+            常用选项：
+            -n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。
+            -e∶直接在指令列模式上进行 sed 的动作编辑；
+            -f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；
+            -r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)
+            -i∶直接修改读取的档案内容，而不是由萤幕输出。    
+
+            常用命令：
+            a   ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+            c   ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+            d   ∶删除，因为是删除啊，所以 d 后面为空即可；
+            i   ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+            p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
+            s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g
+
+### 5.1.28 xargs命令详解
+
+            -i 选项: 告诉 xargs 用每项的名称替换 {};
+            -I {} 选项: 告诉 xargs 用每项的名称替换 {}
+            -t 选项: 指示 xargs 先打印命令，然后再执行;
+            -n 选项: 限制单个命令行的参数个数;
+            -p 选项: 交互式提问y来确认命令的每次执行.
+
+            1. ls | xargs -t -i mv {} {}.bak
+            2. ls *.zip | xargs -t -i unzip -P SOPinU {}.
+
+### 5.1.29 shell脚本调试开发
+
+           用法： set [--abefhkmnptuvxBCHP] [-o option] [arg ...]
+           set -x
+           set -e 这行代码之后的任何代码，如果返回一个非0的值，那么整个脚本立即退出
+           set -o pipefail 告诉 bash 返回从右到左第一个以非0状态退出的管道命令的返回值，如果所有命令都成功执行时才返回0
+
+           set指令能设置所使用shell的执行方式，可依照不同的需求来做设置
+           -a 　标示已修改的变量，以供输出至环境变量。
+        　 -b 　使被中止的后台程序立刻回报执行状态。
+        　 -C 　转向所产生的文件无法覆盖已存在的文件。
+        　 -d 　Shell预设会用杂凑表记忆使用过的指令，以加速指令的执行。使用-d参数可取消。
+        　 -e 　若指令传回值不等于0，则立即退出shell。　　
+        　 -f　 　取消使用通配符。
+        　 -h 　自动记录函数的所在位置。
+        　 -H Shell 　可利用"!"加<指令编号>的方式来执行history中记录的指令。
+        　 -k 　指令所给的参数都会被视为此指令的环境变量。
+        　 -l 　记录for循环的变量名称。
+        　 -m 　使用监视模式。
+        　 -n 　只读取指令，而不实际执行。
+        　 -p 　启动优先顺序模式。
+        　 -P 　启动-P参数后，执行指令时，会以实际的文件或目录来取代符号连接。
+        　 -t 　执行完随后的指令，即退出shell。
+        　 -u 　当执行时使用到未定义过的变量，则显示错误信息。
+        　 -v 　显示shell所读取的输入值。
+        　 -x 　执行指令后，会先显示该指令及所下的参数。
+        　 +<参数> 　取消某个set曾启动的参数。
+
+### 5.1.30 grep命令详解
+
+         选项与参数:
+         -a ：将 binary 文件以 text 文件的方式搜寻数据
+         -c ：计算找到 '搜寻字符串' 的次数
+         -i ：忽略大小写的不同，所以大小写视为相同
+         -n ：顺便输出行号
+         -v ：反向选择，亦即显示出没有 '搜寻字符串' 内容的那一行！
+         --color=auto ：可以将找到的关键词部分高亮
+
+### 5.1.31 jstat命令详解
+
+          jstat -gc pid 可以显示gc的信息，查看gc的次数，及时间
+          jstat -gccapacity pid 可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小
+          jstat -gcutil pid  统计gc信息统计
+          jstat -gcnew pid 年轻代对象的信息
+          jstat -gcnewcapacity pid 年轻代对象的信息及其占用量
+          jstat -gcold pid  old代对象的信息
+          jstat -gcoldcapacity pid  old代对象的信息及其占用量
+          jstat -gcpermcapacity pid perm对象的信息及其占用量
+          jstat -class pid 显示加载class的数量，及所占空间等信息
+          jstat -compiler pid 显示VM实时编译的数量等信息
+          jstat -printcompilation pid 当前VM执行的信息
+
+
+          一些术语的中文解释：
+          S0C：年轻代中第一个survivor（幸存区）的容量 (字节)
+          S1C：年轻代中第二个survivor（幸存区）的容量 (字节)
+          S0U：年轻代中第一个survivor（幸存区）目前已使用空间 (字节)
+          S1U：年轻代中第二个survivor（幸存区）目前已使用空间 (字节)
+          EC：年轻代中Eden（伊甸园）的容量 (字节)
+          EU：年轻代中Eden（伊甸园）目前已使用空间 (字节)
+          OC：Old代的容量 (字节)
+          OU：Old代目前已使用空间 (字节)
+          PC：Perm(持久代)的容量 (字节)
+          PU：Perm(持久代)目前已使用空间 (字节)
+          YGC：从应用程序启动到采样时年轻代中gc次数
+          YGCT：从应用程序启动到采样时年轻代中gc所用时间(s)
+          FGC：从应用程序启动到采样时old代(全gc)gc次数
+          FGCT：从应用程序启动到采样时old代(全gc)gc所用时间(s)
+          GCT：从应用程序启动到采样时gc用的总时间(s)
+          NGCMN：年轻代(young)中初始化(最小)的大小 (字节)
+          NGCMX：年轻代(young)的最大容量 (字节)
+          NGC：年轻代(young)中当前的容量 (字节)
+          OGCMN：old代中初始化(最小)的大小 (字节)
+          OGCMX：old代的最大容量 (字节)
+          OGC：old代当前新生成的容量 (字节)
+          PGCMN：perm代中初始化(最小)的大小 (字节)
+          PGCMX：perm代的最大容量 (字节)   
+          PGC：perm代当前新生成的容量 (字节)
+          S0：年轻代中第一个survivor（幸存区）已使用的占当前容量百分比
+          S1：年轻代中第二个survivor（幸存区）已使用的占当前容量百分比
+          E：年轻代中Eden（伊甸园）已使用的占当前容量百分比
+          O：old代已使用的占当前容量百分比
+          P：perm代已使用的占当前容量百分比
+          S0CMX：年轻代中第一个survivor（幸存区）的最大容量 (字节)
+          S1CMX ：年轻代中第二个survivor（幸存区）的最大容量 (字节)
+          ECMX：年轻代中Eden（伊甸园）的最大容量 (字节)
+          DSS：当前需要survivor（幸存区）的容量 (字节)（Eden区已满）
+          TT： 持有次数限制
+          MTT ： 最大持有次数限制
+
+###  5.1.32 tr命令详解
+
+          #!/bin/bash
+          set -x
+          set -e
+          tempVal=`echo "Hello World" | tr [:upper:] [:lower:]`
+          echo $tempVal
+
+###  5.1.33 route路由相关命令
+
+          1. route 命令添加临时路由
+            route
+            route del default
+            route add default gw  10.9.234.1 (添加临时路由)
+
+          2. 在/etc/rc.local里添加(设置永久路由)
+            1.方法：
+            route add -net 192.168.3.0/24 dev eth0
+            route add -net 192.168.2.0/24 gw 192.168.2.254
+
+            2.在/etc/sysconfig/network里添加到末尾
+            方法：GATEWAY=gw-ip 或者 GATEWAY=gw-dev
+
+            3./etc/sysconfig/static-routes : (没有static-routes的话就手动建立一个这样的文件)
+            any net 192.168.3.0/24 gw 192.168.3.254
+            any net 10.250.228.128 netmask 255.255.255.192 gw 10.250.228.129
+
+            4.开启 IP 转发：
+            # echo "1" >/proc/sys/net/ipv4/ip_forward (临时)
+            # vi /etc/sysctl.conf --> net.ipv4.ip_forward=1 (永久开启)
+
+### 5.1.34 SSH命令详解
+          1. ssh到多个节点，执行shell命令
+          cat /etc/hosts |grep -v localhost|grep -v ICT|grep -v kafka |awk '{print $2}' | xargs -I {} ssh {} "rm -rf /home/temp/*"
+
+### 5.1.35 cut命令详解
+          cut是一个选取命令,就是将一段数据经过分析,筛选出需要的数据.
+          1. 语法格式
+             cut  [-bn] [file] 或 cut [-c] [file]  或  cut [-df] [file]
+          2. 主要参数说明
+              -b ：以字节为单位进行分割。这些字节位置将忽略多字节字符边界，除非也指定了 -n 标志。
+              -c ：以字符为单位进行分割。
+              -d ：自定义分隔符，默认为制表符。
+              -f  ：与-d一起使用，指定显示哪个区域。
+              -n ：取消分割多字节字符。仅和 -b 标志一起使用。如果字符的最后一个字节落在由 -b 标志的 List 参数指示的<br />范围之内，该字符将被写出；否则，该字符将被排除。
+          3. 
 
 ---
 
@@ -1194,6 +1800,7 @@
       点m从点p直接密度可达，因为m在p的E领域内，并且p为核心对象；
       点q从点p密度可达，因为点q从点m直接密度可达，并且点m从点p直接密度可达；
       点q到点s密度相连，因为点q从点p密度可达，并且s从点p密度可达。
+
 ### 6.1.2 算法步骤
 
       DBScan需要二个参数： 扫描半径 (eps)和最小包含点数(minPts)。
@@ -1248,6 +1855,7 @@
 
 ## 6.2 哈希算法
 ### 6.2.1 算法描述(哈希值检验数据的完整性)
+
           单向散列算法,它把某个较大的集合P映射到另一个较小的集合Q中,假如这个算法叫H,那么就有 Q = H(P);
           对于P中任何一个值p都有唯一确定的q与之对应,但是一个q可以对应多个p;
           作为一个有用的Hash算法, H还应该满足:H(p)速度比较快;给出一个q,很难算出一个p满足 q = H(p);给出一个p1,很难算出一个不等于p1的p2使得 H(p1)=H(p2);
@@ -1256,6 +1864,7 @@
           这种映射的关系我们叫做哈希函数或者散列函数.
 
 ### 6.2.2 算法示例
+
           def RSHash(value: String):Long = {
               var a = 63689
               val b = 378551
@@ -1267,3 +1876,33 @@
               }
               hash
           }
+
+## 6.3 快速排序
+### 6.3.1 算法实现
+          def quickSort(ls: List[Int]): List[Int] = {
+          if (ls.isEmpty) ls
+          else quickSort(ls.filter(e => e < ls.head)) ::: ls.head :: quickSort(ls.filter(e => e > ls.head))
+          }
+
+## 6.4 三角定位算法
+### 6.4.1 算法实现
+
+
+## 6.5 椭圆第一偏心率、第二偏心率
+
+     基本概念:
+     a: 长轴半径
+     b: 短轴半径
+     c: 两焦点之间的距离的一半
+     F1、F2： 两焦点
+     离心率范围：0<e<1
+     离心率越大椭圆就越扁，越小则越接近于圆
+
+     计算公式：
+     1) 焦点在X轴时，标准方程为：x²/a²+y²/b²=1 (a>b>0)
+     2) 焦点在Y轴时，标准方程为：y²/a²+x²/b²=1 (a>b>0)
+     3) 椭圆的面积是πab
+     4) x=acosθ ， y=bsinθ
+     5) e为椭圆的离心率=c/a
+        第一离心率 e1 = c/a;  c^2 = a^2 - b^2
+        第二离心率 e2 = c/b;  c^2 = a^2 - b^2
