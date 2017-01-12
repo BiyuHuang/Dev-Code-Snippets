@@ -27,11 +27,11 @@ libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.16"
 
 // libraryDependencies += "ch.qos.logback" % "logback-core" % "1.1.2"
 
-libraryDependencies += "org.scalanlp" %% "breeze" % "0.10"
+//libraryDependencies += "org.scalanlp" %% "breeze" % "0.10"
 
-libraryDependencies += "org.scalanlp" %% "breeze-natives" % "0.10"
+//libraryDependencies += "org.scalanlp" %% "breeze-natives" % "0.10"
 
-libraryDependencies += "org.apache.spark" % "spark-core_2.11" % "1.6.1"
+//libraryDependencies += "org.apache.spark" % "spark-core_2.11" % "1.6.1"
 
 parallelExecution in ThisBuild := false
 
