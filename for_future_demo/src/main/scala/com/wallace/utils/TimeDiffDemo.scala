@@ -1,11 +1,13 @@
 package com.wallace.utils
 
+import com.wallace.common.LogSupport
+
 /**
   * Created by Wallace on 2016/10/27.
   */
-object TimeDiffDemo extends App with TimeDiff {
+object TimeDiffDemo extends App with TimeDiff with LogSupport {
   val res = timeDiff[Unit](func(), 4)
-  println("TimeDiff:" + res + "ms.")
+  log.info("TimeDiff:" + res + "ms.")
 
 
   def func(): Unit = {
