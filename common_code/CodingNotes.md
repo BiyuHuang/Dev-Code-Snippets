@@ -1567,8 +1567,9 @@ However, it is applicable to only "invertible reduce functions", that is, those 
       if [ $(echo "$value1 < $value2"|bc) -eq 1 ];then
       res="较大的值为：$value2"
       else
-      res="较大的值为：$value1"
-      fi
+      res='较大的值为：$value1'
+      fi "
+      
 * Shell脚本开发调试
       用法： set [--abefhkmnptuvxBCHP] [-o option] [arg ...]
       set -x
