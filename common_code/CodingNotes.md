@@ -233,6 +233,94 @@
           myChart.setOption({...});
         })
 
+* 代码片段
+        // var data = "[['92','38'],['wallace','Lina']]";
+        // var change = eval("(" + data + ")");
+
+        // var temp = []
+        // for(var i=0; i< change.length; i++){
+        //     temp[i] = change[i];
+        // }
+
+        // alert(temp);
+
+
+        // var a = [];
+        // alert(a[0]);
+
+
+        var a = 0.497
+        alert(a.toFixed(2))
+
+        var s = 22.127456 + "";
+        var str = s.substring(0,s.indexOf(".") + 3);
+        alert(str);
+
+        var num=22.127456;
+        alert( Math.round(num*100)/100);
+
+          //保留两位小数   
+          //功能：将浮点数四舍五入，取小数点后2位  
+          function toDecimal(x) {  
+              var f = parseFloat(x);  
+              if (isNaN(f)) {  
+                  return;  
+              }  
+              f = Math.round(x*100)/100;  
+              return f;  
+          }  
+
+
+          //制保留2位小数，如：2，会在2后面补上00.即2.00  
+          function toDecimal2(x) {  
+              var f = parseFloat(x);  
+              if (isNaN(f)) {  
+                  return false;  
+              }  
+              var f = Math.round(x*100)/100;  
+              var s = f.toString();  
+              var rs = s.indexOf('.');  
+              if (rs < 0) {  
+                  rs = s.length;  
+                  s += '.';  
+              }  
+              while (s.length <= rs + 2) {  
+                  s += '0';  
+              }  
+              return s;  
+          }  
+
+          function fomatFloat(src,pos){     
+               return Math.round(src*Math.pow(10, pos))/Math.pow(10, pos);     
+          }  
+          //四舍五入  
+          alert("保留2位小数：" + toDecimal(3.14159267));  
+          alert("强制保留2位小数：" + toDecimal2(3.14159267));  
+          alert("保留2位小数：" + toDecimal(3.14559267));  
+          alert("强制保留2位小数：" + toDecimal2(3.15159267));  
+          alert("保留2位小数：" + fomatFloat(3.14559267, 2));  
+          alert("保留1位小数：" + fomatFloat(3.15159267, 1));  
+
+          //五舍六入  
+          alert("保留2位小数：" + 1000.003.toFixed(2));  
+          alert("保留1位小数：" + 1000.08.toFixed(1));  
+          alert("保留1位小数：" + 1000.04.toFixed(1));  
+          alert("保留1位小数：" + 1000.05.toFixed(1));  
+
+          //科学计数  
+          alert(3.1415.toExponential(2));  
+          alert(3.1455.toExponential(2));  
+          alert(3.1445.toExponential(2));  
+          alert(3.1465.toExponential(2));  
+          alert(3.1665.toExponential(1));  
+          //精确到n位，不含n位  
+          alert("精确到小数点第2位" + 3.1415.toPrecision(2));  
+          alert("精确到小数点第3位" + 3.1465.toPrecision(3));  
+          alert("精确到小数点第2位" + 3.1415.toPrecision(2));  
+          alert("精确到小数点第2位" + 3.1455.toPrecision(2));  
+          alert("精确到小数点第5位" + 3.141592679287.toPrecision(5));  
+
+
 ### 1.4.2 RDK Doc
 
 ### 1.4.3 React Doc
@@ -1206,6 +1294,13 @@ However, it is applicable to only "invertible reduce functions", that is, those 
       ps -e
       ps -A -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9  (查找僵死进程,并杀死父进程)
       ps -ef | grep "nslookup" | awk '{print $2}' | xargs -t -i kill -9 {}  (kill全部检索出来的所有进程)
+
+      设置和改变进程的优先级，进程优先级值的范围从-20到19，值越低，优先级越高
+      $ renice -n 4 -p 11208
+      11208 (进程 ID) 旧优先级为 0，新优先级为 4
+      $ renice -n 0 -p 11208
+      11208 (进程 ID) 旧优先级为 4，新优先级为 0
+
 * 内存相关操作
       cat /proc/sys/vm/drop_caches
       手动执行sync命令(描述:sync 命令运行 sync 子例程。如果必须停止系统，则运行 sync 命令以确保文件系统的完整性。sync 命令将所有未写的系统缓冲区写到磁盘中，包含已修改的 i-node、已延迟的块 I/O 和读写映射文件)
@@ -1296,13 +1391,47 @@ However, it is applicable to only "invertible reduce functions", that is, those 
       # This file is only for evaluation by system-config-date, do not rely on its
       # contents elsewhere.
       ZONE="Asia/Shanghai"
+
+      $ date -d '2000-01-01 00:00:00 549234123 seconds' +"%Y-%m-%d %T"
+      2017-05-28 05:02:03
+
+      转换指定日期为Unix时间戳：date -d '2013-2-22 22:14' +%s
+      将Unix时间戳转换为日期时间(不指定日期时间的格式)：date -d @1361542596
+      将Unix时间戳转换为日期时间(指定日期格式的转换)：date -d @1361542596 +"%Y-%m-%d %H:%M:%S"
+      时间戳转换成日期：
+      date -d '1970-01-01 UTC 542194698 seconds' +"%Y-%m-%d %T"
+      date -d '2000-01-01 00:00:00 542199674 seconds' +"%Y-%m-%d %T"
+
+      获取当前时间戳
+      date '+%s'
+
+
+* 查看系统配置(评估性能按照总线程数评估)
+      $ grep 'physical id' /proc/cpuinfo | sort -u |wc -l
+      2
+      $ grep 'core id' /proc/cpuinfo |sort -u |wc -l
+      8
+      $ grep 'processor' /proc/cpuinfo |sort -u |wc -l        
+      32
+      $ grep 'model name' /proc/cpuinfo | wc -l
+      32
+      z
+      该服务器有2个cpu，8个核心，每个核心4线程，共32线程
+
 * 强制踢人命令格式
       pkill -kill -t tty
 * 踢掉用终端登陆的用户
       ps -ef |grep pts/0
       kill -9 pid
+* Kill僵尸进程
+      ps -A -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs -I {}  kill -9 {}
 
 ### 5.1.2 文件操作命令
+* 文件名/文件内容查询
+  按文件内容查找文件名
+    find . -name "*.xml" | xargs grep "netmaxid"
+  按文件名查找
+    find . -name "*.xml"
 * 新建文件
       touch 文件名
 * 修改文件名
@@ -1409,7 +1538,21 @@ However, it is applicable to only "invertible reduce functions", that is, those 
         查看文件个数 ls -l | grep ^
         统计文件个数(包括子目录) ls -lR|grep "^-"|wc -l
         统计/home/han目录(包含子目录)下的所有js文件则: ls -lR /home/han|grep js|wc -l 或 ls -l "/home/han"|grep "js"|wc -l   
+        列出当前目录及子目录下的文件夹完整路径: ls -FR | grep /$ | sed "s:^:`pwd`/:"
+        列出当前目录及子目录的文件、文件夹完整路径: ls -R |awk '{print i$0}' i=`pwd`'/'
+        列出当前目录的文件、文件夹完整路径: ls -1 |awk '{print i$0}' i=`pwd`'/'
+        递归列出当前目录及子目录名称: ls -FR | grep /$
+        递归列出当前目录及子目录名称，包括相关属性: ls -lR | grep "^d"
 
+* 查询文件状态改变时间(如果文件创建后就没有修改过，修改时间=创建时间;如果文件创建后，状态就没有改变过，那么状态改变时间=创建时间)
+        $ stat file_name
+        File: `file_name'
+        Size: 695647          Blocks: 1360       IO Block: 4096   regular file
+        Device: fd04h/64772d    Inode: 14          Links: 1
+        Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+        Access: 2017-03-10 17:37:44.640494161 +0800
+        Modify: 2017-03-11 14:52:41.943515444 +0800
+        Change: 2017-03-11 14:52:41.943515444 +0800
 
 #### 5.1.3 HADOOP常用命令
 * 列出目录及文件信息
@@ -1567,9 +1710,8 @@ However, it is applicable to only "invertible reduce functions", that is, those 
       if [ $(echo "$value1 < $value2"|bc) -eq 1 ];then
       res="较大的值为：$value2"
       else
-      res='较大的值为：$value1'
-      fi "
-      
+      res="较大的值为：$value1"
+      fi
 * Shell脚本开发调试
       用法： set [--abefhkmnptuvxBCHP] [-o option] [arg ...]
       set -x
@@ -1635,7 +1777,7 @@ However, it is applicable to only "invertible reduce functions", that is, those 
 
   - 常用选项：
         -n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。
-        -e∶直接在指令列模式上进行 sed 的动作编辑；
+        -e∶直接在指令列模式上进行 sed 的动作编辑；多点编辑
         -f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；
         -r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)
         -i∶直接修改读取的档案内容，而不是由萤幕输出。    
@@ -1652,6 +1794,8 @@ However, it is applicable to only "invertible reduce functions", that is, those 
         sed -i 's/^/xxxx&/g' file.csv  (文件内容每行行首添加"xxxx")
         sed -i 's/$/&xxxx/g' file.csv  (文件内容每行行尾添加"xxxx")
         sed -i "/xxxx/d" file.csv (文件内容删除匹配"xxxx"行)
+        sed -e 's/^/,/'  -e ':1;s/\(.*,"[^",]*\),\(.*\)/\1$\2/;t1' -e 's/^,//' test.csv（文件内容每行 "a,b,c" 替换成 "a$b$c"）
+        sed -e '1,5d' -e 's/test/check/'example  (多点编辑:第一条命令删除1至5行，第二条命令用 check替换test)
 
 ### 5.1.11 xargs命令详解
     -i 选项: 告诉 xargs 用每项的名称替换 {};
@@ -1716,6 +1860,8 @@ However, it is applicable to only "invertible reduce functions", that is, those 
       awk -v var1=211 -v var2=12 'BEGIN{if(var1 < var2) {print var1} else {print var2}}'
       awk -v var1=2110 -v var2=1 'BEGIN{if(var1 < var2) {print "@2017-01-06 10:37:54 MinValue="var1} else {print "@2017-01-06 10:37:54  MinValue="var2}}'
       -f progfile：允许awk调用并执行progfile程序文件，当然progfile必须是一个符合awk语法的程序文件。
+
+
 
 ---
 
