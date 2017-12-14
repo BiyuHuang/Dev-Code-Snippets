@@ -1,0 +1,195 @@
+1. 查询文件状态改变时间(如果文件创建后就没有修改过，修改时间=创建时间;如果文件创建后，状态就没有改变过，那么状态改变时间=创建时间)
+$ stat file_name
+File: `file_name'
+Size: 695647          Blocks: 1360       IO Block: 4096   regular file
+Device: fd04h/64772d    Inode: 14          Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2017-03-10 17:37:44.640494161 +0800
+Modify: 2017-03-11 14:52:41.943515444 +0800
+Change: 2017-03-11 14:52:41.943515444 +0800
+
+
+2. nmon性能监控工具
+nmon_x86_64_rhel5 -s10 -c6 -f -m /home/ 
+nmon_x86_64_rhel5 -s300 -c288 -f -m /home/ > /dev/null 2>&1
+
+3. 日期转换常用命令
+转换指定日期为Unix时间戳：date -d '2013-2-22 22:14' +%s
+将Unix时间戳转换为日期时间(不指定日期时间的格式)：date -d @1361542596
+将Unix时间戳转换为日期时间(指定日期格式的转换)：date -d @1361542596 +"%Y-%m-%d %H:%M:%S"
+
+时间戳转换成日期： 
+date -d '1970-01-01 UTC 542194698 seconds' +"%Y-%m-%d %T"
+date -d '2000-01-01 00:00:00 542199674 seconds' +"%Y-%m-%d %T" 
+
+date -d '2000-01-01 00:00:00 548018647 seconds' +"%Y-%m-%d %T" 
+4. 查看系统配置(评估性能按照总线程数评估)
+$ grep 'physical id' /proc/cpuinfo | sort -u |wc -l
+2
+$ grep 'core id' /proc/cpuinfo |sort -u |wc -l
+8
+$ grep 'processor' /proc/cpuinfo |sort -u |wc -l        
+32
+$ grep 'model name' /proc/cpuinfo | wc -l
+32
+
+该服务器有2个cpu，8个核心，每个核心4线程，共32线程
+
+5. Top命令查看各个processor的使用情况
+命令行输入top,然后按1键
+
+6. Kill僵尸进程
+ps -A -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs -I {}  kill -9 {}
+
+7. 查看已经从目录系统中移除，但任然被程序占用的的文件
+lsof | grep '(deleted)'
+
+8. 查看网络流量
+iptraf -g
+
+9. Find命令详解
+a 按文件内容查找文件名
+  find . -name "*.xml" | xargs grep "netmaxid"
+b 按文件名查找
+  find . -name "*.xml"
+c 查找指定目录下0字节的文件并删除
+  find /data11/ -type f -size 0 -exec rm {} \;
+d 查找大于100M的文件
+  find . -type f -size +1000000k 
+
+示例：find /home/kafka-loader*/ -name "KafkaLoader_dataPath.conf" |xargs grep datapath |awk -F '\"' '{print $2}'
+
+10. 磁盘相关操作
+a 查看磁盘inode的数量
+  dumpe2fs -h /dev/xvdb1 |grep node
+  df -i
+b 修改inode数量
+  umount /dev/sdbl
+  mkfs.ext4 /dev/sdb1 -N 3124756480
+  mount /dev/sdb1 /data10
+c 将文件家 A 链接到另一个文件夹 B
+  ln -s B A 
+
+11. 网络性能测试工具iperf
+
+12. ifconfig命令详解
+   ifconfig -a  | awk 'BEGIN {FS="\n"; RS=""} {print $1,$2}' | grep -v 'lo'|grep 'addr:' |  awk '{print "\t\t"$1,$7}'
+
+13. 磁盘IO性能测试
+a 磁盘读性能
+  hdparm -Tt /dev/sda
+      time dd if=/dev/sdb1 of=/dev/null bs=8k
+b 磁盘写性能
+      time dd if=/dev/zero of=/data1/test.dbf bs=8k count=3000000
+    c 磁盘同时读、写性能
+      time dd if=/dev/sdc1 of=/data1/test.dbf bs=8k、
+
+14. 字符串操作
+var=http://www.aaa.com/123.htm
+#、## 表示从左边开始删除。一个 # 表示从左边删除到第一个指定的字符；两个 # 表示从左边删除到最后一个指定的字符。
+%、%% 表示从右边开始删除。一个 % 表示从右边删除到第一个指定的字符；两个 % 表示从左边删除到最后一个指定的字符。删除包括了指定的字符本身
+
+1. # 号截取，删除左边字符，保留右边字符。
+echo ${var#*//}
+其中 var 是变量名，# 号是运算符，*// 表示从左边开始删除第一个 // 号及左边的所有字符
+即删除 http://
+结果是 ：www.aaa.com/123.htm
+2. ## 号截取，删除左边字符，保留右边字符。
+echo ${var##*/}
+##*/ 表示从左边开始删除最后（最右边）一个 / 号及左边的所有字符
+即删除 http://www.aaa.com/
+结果是 123.htm
+3. %号截取，删除右边字符，保留左边字符
+echo ${var%/*}
+%/* 表示从右边开始，删除第一个 / 号及右边的字符
+结果是：http://www.aaa.com
+4. %% 号截取，删除右边字符，保留左边字符
+echo ${var%%/*}
+%%/* 表示从右边开始，删除最后（最左边）一个 / 号及右边的字符
+结果是：http:
+5. 从左边第几个字符开始，及字符的个数
+echo ${var:0:5}
+其中的 0 表示左边第一个字符开始，5 表示字符的总个数。
+结果是：http:
+6. 从左边第几个字符开始，一直到结束。
+echo ${var:7}
+其中的 7 表示左边第8个字符开始，一直到结束。
+结果是 ：www.aaa.com/123.htm
+7. 从右边第几个字符开始，及字符的个数
+echo ${var:0-7:3}
+其中的 0-7 表示右边算起第七个字符开始，3 表示字符的个数。
+结果是：123
+8. 从右边第几个字符开始，一直到结束。
+echo ${var:0-7}
+表示从右边第七个字符开始，一直到结束。
+结果是：123.htm
+
+
+15. 进程检查
+pgrep -f Kafka #根据进程名称检查进程 
+
+16. 软连接
+Linux文件系统中，有所谓的链接(link)，我们可以将其视为档案的别名，而链接又可分为两种 : 硬链接(hard link)与软链接(symbolic link)，硬链接的意思是一个档案可以有多个名称，而软链接的方式则是产生一个特殊的档案，该档案的内容是指向另一个档案的位置。硬链接是存在同一个文件系统中，而软链接却可以跨越不同的文件系统。
+软链接：
+1.软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式
+2.软链接可以 跨文件系统 ，硬链接不可以
+3.软链接可以对一个不存在的文件名进行链接
+4.软链接可以对目录进行链接
+硬链接:
+1.硬链接，以文件副本的形式存在。但不占用实际空间。
+2.不允许给目录创建硬链接
+3.硬链接只有在同一个文件系统中才能创建
+
+命令格式：ln -s [源文件或源文件夹] [链接文件]
+		ln -s /data11/zxvmax/ / )(将/data11/zxvmax/ 连接到/zxvmax)
+命令参数：
+	必要参数:
+		-b 删除，覆盖以前建立的链接
+		-d 允许超级用户制作目录的硬链接
+		-f 强制执行
+		-i 交互模式，文件存在则提示用户是否覆盖
+		-n 把符号链接视为一般目录
+		-s 软链接(符号链接)
+		-v 显示详细的处理过程
+17. 缓存
+1. 仅清除页面缓存（PageCache）
+   # sync; echo 1 > /proc/sys/vm/drop_caches       
+2. 清除目录项和inode
+       # sync; echo 2 > /proc/sys/vm/drop_caches       
+    3. 清除页面缓存，目录项和inode
+       # sync; echo 3 > /proc/sys/vm/drop_caches 
+   上述命令的说明：
+sync 将刷新文件系统缓冲区（buffer）
+
+18. # 替换双引号中的逗号为其它符号， 比如 a,b,“x,x,x”,c,d  => a,b,“x$x$x$x”,c,d
+# sed 实现，只能替换固定个数的逗号，可以用来应对T054中的栅格坐标，比如： 1,,,0,-86,122,"5041,-16847,-11386","5041,-8424,-5693","5041,-3370,-2278","5041,-1685,-1139","5041,-843,-570"
+sedreplace(){
+    sed 's/"\([^,]*\),\([^,]*\),\([^,]*\)"/"\1$\2$\3"/g' $1
+}
+
+# awk实现，可以替换任意个数的逗号
+# a,b,"c1,c2",d,"e1,e2,e3",f,"g1,g2,g3,g4,g5,g6",h,i => a,b,c1$c2,d,e1$e2$e3,f,g1$g2$g3$g4$g5$g6,h,i
+awkreplace(){
+    awk -F '"' '{
+        for(i=1;i<=NF;i++){
+            if (i%2 == 0) {
+                gsub(/,/,"$",$i)
+            }
+            printf("%s",$i)
+        }
+        printf("\n")
+    }' $1
+}
+
+19. AWK下gsub函数用法
+gsub函数则使得在所有正则表达式被匹配的时候都发生替换
+gsub(regular expression, subsitution string, target string);简称 gsub（r,s,t)
+
+$ echo "a b c 2011-11-22 a:d" | awk 'gsub(/-/,"",$4)'
+a b c 20111122 a:d
+
+$  echo "a b c 2011-11-22 a:d" | awk 'gsub(/-/,"_",$4)'
+a b c 2011_11_22 a:d
+
+$ echo "a b c 2011,11,22 a:d" | awk 'gsub(/,/,"$",$4)'
+a b c 2011$11$22 a:d
