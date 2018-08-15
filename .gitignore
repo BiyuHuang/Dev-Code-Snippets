@@ -32,7 +32,7 @@ project/target/
 
 # PDT-specific
 .buildpath
-
+*.log
 
 #################
 ## Visual Studio
