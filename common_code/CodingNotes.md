@@ -721,6 +721,7 @@ RDD计算操作算子：Transformation(变换) 与 Action(行动)
 3. Action算子，这类算子会触发SparkContext提交Job作业。
 
 * map
+      
       scala> val c = sc.textFile("READMD.md") //从文件读取数据，创建RDD
       res0: Array[String] = Array("HUANG ", ZHANG, WALLACE, HUANG, HUANG, BELL, Eily, BELL)
       scala> c.map(word => (word,1)).collect
@@ -729,6 +730,7 @@ RDD计算操作算子：Transformation(变换) 与 Action(行动)
       res3: Array[(String, Int)] = Array((ZHANG,1), (WALLACE,1), (HUANG,2), (BELL,2), ("HUANG ",1), (Eily,1))
 
 * mapPartitions (map的一个变种，将每个partition中的内容作为整体进行处理)
+      
       scala> val a1= sc.parallelize(1 to 9,3) //创建RDD，3个分区
       a1: org.apache.spark.rdd.RDD[Int] = ParallelCollectionRDD[30] at parallelize at <console>:21
       scala> a1.collect
